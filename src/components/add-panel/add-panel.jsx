@@ -1,15 +1,47 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './add-panel.css';
 
-const AddPanel = (props) => {
-  const {addItem} = props; 
-  return (
-    <div className="add-item">
-      <button type = "button" className="btn btn-outline-secondary"
-           onClick = {()=>{addItem("Hello, world!")}}>Add todos item</button>
-      
-    </div>
-  )
+export default class AddPanel extends Component {
+  constructor() {
+    super();
+    
+    this.state = {
+      label: ''
+    }
+
+    this.onLabelChange = (event) => {
+      this.setState({
+        label: event.target.value
+      });
+    }
+
+    this.onSubmit = (e) => {
+      e.preventDefault();
+      this.props.addItem(this.state.label);
+      this.setState({
+        label: ''
+      });
+    };
+
+  }
+  
+
+  render() {
+    return (
+      <form className = "item-add-form d-flex"
+             onSubmit = {this.onSubmit}>
+        <input type = "text" 
+               className = "form-control"
+               placeholder = "Type what need to do"
+               onChange = {this.onLabelChange}
+               value={this.state.label}
+                  />
+        <button type = "submit" className="btn btn-outline-secondary">
+             Add</button>
+      </form>
+    )
+  }
+   
+
 }
 
-export default AddPanel;

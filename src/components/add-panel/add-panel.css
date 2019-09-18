@@ -1,4 +1,7 @@
-.add-item {
-  margin-top:13px;
-  align-items: center;
+.item-add-form  {
+  margin: 13px 0;
+}
+
+.form-control {
+  margin-right: 5px;
 }
