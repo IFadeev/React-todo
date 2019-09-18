@@ -1,35 +1,24 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import './todo-list-item.css';
 
-export default class TodoListItem extends Component {
-  constructor() {
-    super();
-    
-    this.state = {
-      done: false,
-      important: false
-    };
+const TodoListItem = (props) => {
+  const { label, done, important, 
+          onDeleted, onToggleDone, 
+          onToggleImportant } = props;
 
+  let classNames = "todo-list-item"
 
-  };
-  
-  render() {
-    const { label, done, important, 
-            onDeleted, onToggleDone, 
-            onToggleImportant } = this.props;
-    
-    let classNames = "todo-list-item"
+  if (done) {
+  classNames += " done"
+  }
 
-    if (done) {
-      classNames += " done"
-    }
+  if (important) {
+  classNames += " important"
+  }
 
-    if (important) {
-      classNames += " important"
-    }
-
-    return (
+  return(
+    <div>
       <span className = {classNames}>
         <span
           className = "todo-list-item-label"
@@ -49,8 +38,9 @@ export default class TodoListItem extends Component {
              <i className = "fa fa-trash-o" />
         </button>
       </span>
-    );
-
-  }
+    </div>
+  );
+    
 }
-  
+
+export default TodoListItem;
