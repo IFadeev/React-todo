@@ -34,7 +34,8 @@ export default class AddPanel extends Component {
                className = "form-control"
                placeholder = "Type what need to do"
                onChange = {this.onLabelChange}
-               value={this.state.label} />
+               value={this.state.label} 
+               required minLength="1"/>
         <button type = "submit" className="btn btn-outline-secondary">
              Add</button>
       </form>
