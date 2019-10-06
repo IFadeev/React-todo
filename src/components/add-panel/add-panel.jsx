@@ -9,14 +9,15 @@ export default class AddPanel extends Component {
       label: ''
     }
 
-    this.onLabelChange = (event) => {
+    this.onLabelChange = evt => {
       this.setState({
-        label: event.target.value
+        label: evt.target.value
       });
     }
 
-    this.onSubmit = (e) => {
-      e.preventDefault();
+    this.onSubmit = evt => {
+      evt.preventDefault();
+
       this.props.addItem(this.state.label);
       this.setState({
         label: ''
@@ -24,7 +25,6 @@ export default class AddPanel extends Component {
     };
 
   }
-  
 
   render() {
     return (
@@ -34,8 +34,7 @@ export default class AddPanel extends Component {
                className = "form-control"
                placeholder = "Type what need to do"
                onChange = {this.onLabelChange}
-               value={this.state.label}
-                  />
+               value={this.state.label} />
         <button type = "submit" className="btn btn-outline-secondary">
              Add</button>
       </form>

@@ -17,11 +17,14 @@ export default class App extends Component {
         {label: "Make breakfast", important: false, done: false, id: 1},
         {label: "Create React App", important: true, done: false, id: 2},
         {label: "Make something", important: false, done: false, id: 3}
-      ]
+      ],
+      phrase: ''
     };
 
+    window.state = this.state;
+
     this.deleteItem = (id) => {
-      this.setState( ({appData})=> {
+      this.setState( ({ appData }) => {
         const idx = appData.findIndex( (el) => el.id === id);
         //Для того, чтобы не изменять state напрямую,
         //используем метод slice, вместо splice
@@ -35,7 +38,7 @@ export default class App extends Component {
       })
     };
 
-    this.addItem = (text) => {
+    this.addItem = (text) => { 
       const newItem =  {
         label: text,
         important: false,
@@ -53,7 +56,7 @@ export default class App extends Component {
           appData: newAppData
         }
       });
-    }
+    };
     
     this.toggleProperty = (arr, id, propery) => {
       const idx = arr.findIndex( el => el.id === id);
@@ -66,37 +69,57 @@ export default class App extends Component {
         newItem,
         ...arr.slice(idx + 1)
       ];
-    }
+    };
 
-    this.onToggleDone = (id) => {
-      this.setState( ( {appData} ) => {
+    this.onToggleDone = id => {
+      this.setState( ({ appData } ) => {
         return {
           appData: this.toggleProperty(appData, id, 'done')
         }
       })
-    }
+    };
 
-    this.onToggleImportant = (id) => {
-      this.setState( ( {appData}) => {
+    this.onToggleImportant = id => {
+      this.setState( ({ appData }) => {
         return {
           appData: this.toggleProperty(appData, id, 'important')
         }
       })
-    }
+    }; 
+
+    this.search = (items, phrase) => {
+
+      if (phrase.length === 0) {
+        return items;
+      }
+      
+      return items.filter( elem => {
+        return elem.label.indexOf(phrase) > -1;
+      });
+    };
+
+    this.onSearchChange = phrase => {
+      this.setState({phrase});
+    };
+
+
   }
 
   render() {
     const { appData } = this.state;
     const doneCount = appData.filter( el => el.done).length;
     const todoItemCount = appData.length - doneCount;
+    const currentItem = this.search(this.state.appData, this.state.phrase);
+
+
     return(
       <div className="todo-app">
         <AppHeader toDo={todoItemCount} done={doneCount} />
         <div className="top-panel d-flex">
           <ItemStatusFilter/>
-          <SearchPanel/>
+          <SearchPanel onSearchChange = {this.onSearchChange}/>
         </div>
-        <TodoList   todos = {appData} 
+        <TodoList   todos = {currentItem} 
                 onDeleted = {this.deleteItem}
              onToggleDone = {this.onToggleDone}
         onToggleImportant = {this.onToggleImportant}/>
