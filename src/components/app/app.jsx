@@ -92,7 +92,7 @@ export default class App extends Component {
       }
       
       return items.filter( elem => {
-        return elem.label.indexOf(phrase) > -1;
+        return elem.label.toLowerCase().indexOf(phrase.toLowerCase()) > -1;
       });
     };
 
@@ -105,14 +105,11 @@ export default class App extends Component {
     }
 
     this.onFilter = (items, status) => {
-      if (status === "all") {
-        return items
-      }
-      else if (status === "active") {
-        return items.filter( elem => (!elem.done)) 
-      }
-      else if (status === "done") {
-        return items.filter( elem => (elem.done))
+      switch(status) {
+        case "all": return items
+        case "active": return items.filter( elem => (!elem.done)) 
+        case "done": return items.filter( elem => (elem.done))
+        default: return items
       }
     }
 

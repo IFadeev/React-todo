@@ -8,7 +8,6 @@ export default class ItemStatusFilter extends Component {
     super()
 
     this.onFilterChange = evt => {
-      evt.target.classList.toggle("btn-info")
 
       this.props.onStatusChange(evt.target.value)
 
