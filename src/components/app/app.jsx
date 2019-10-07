@@ -116,16 +116,16 @@ export default class App extends Component {
   }
 
   render() {
-    const { appData } = this.state;
+    const { appData, phrase, status } = this.state;
     const doneCount = appData.filter( el => el.done).length;
     const todoItemCount = appData.length - doneCount;
-    const currentItems = this.search(this.onFilter(this.state.appData, this.state.status), this.state.phrase);
+    const currentItems = this.search(this.onFilter(appData, status), phrase);
 
     return(
       <div className="todo-app">
         <AppHeader toDo={todoItemCount} done={doneCount} />
         <div className="top-panel d-flex">
-          <ItemStatusFilter onStatusChange = {this.onStatusChange}/>
+          <ItemStatusFilter status = {status} onStatusChange = {this.onStatusChange}/>
           <SearchPanel onSearchChange = {this.onSearchChange}/>
         </div>
         <TodoList   todos = {currentItems} 
